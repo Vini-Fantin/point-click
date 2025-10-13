@@ -8,7 +8,7 @@ class PlaceController extends Controller
     public function index() {
         $places = Place::where('id', '>', 0)->with('items')->get();
 
-        if($places){
+        if(!$places->isEmpty()){
             return response()->json(['data' => $places, 'code' => 200], 200);
         }
         return response()->json(['message' => "Nenhum lugar encontrado.", 'code' => 404], 404);

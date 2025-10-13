@@ -8,7 +8,7 @@ class ItemController extends Controller
     public function index() {
         $items = Item::where('id', '>', 0)->with('place')->get();
 
-        if($items){
+        if(!$items->isEmpty()){
             return response()->json(['data' => $items, 'code' => 200], 200);
         }
         return response()->json(['message' => "Nenhum item encontrado.", 'code' => 404], 404);

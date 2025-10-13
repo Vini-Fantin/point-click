@@ -13,6 +13,10 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\Placeontroller;
+
+$router->get('/items-index', 'ItemController@index');
+
+$router->get('/places-index', 'placeController@index');
+$router->get('/places/{id}', 'placeController@show');
