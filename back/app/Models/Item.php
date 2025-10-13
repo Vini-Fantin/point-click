@@ -19,4 +19,5 @@ class Item extends Model
         return $this->belongsTo(Place::class);
     }
 
+    public $timestamps = false;
 }

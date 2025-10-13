@@ -14,9 +14,13 @@
 */
 
 use App\Http\Controllers\ItemController;
-use App\Http\Controllers\Placeontroller;
+use App\Http\Controllers\PlaceController;
+use App\Http\Controllers\LeaderBoardController;
 
 $router->get('/items-index', 'ItemController@index');
 
 $router->get('/places-index', 'placeController@index');
 $router->get('/places/{id}', 'placeController@show');
+
+$router->get('/leaderboard-index', 'LeaderBoardController@index');
+$router->post('/leaderboard', 'LeaderBoardController@store');

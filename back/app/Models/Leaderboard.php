@@ -14,4 +14,5 @@ class Leaderboard extends Model
         'score',
     ];
 
+    public $timestamps = false;
 }

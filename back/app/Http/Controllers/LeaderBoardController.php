@@ -15,10 +15,10 @@ class LeaderBoardController extends Controller
             return response()->json(['message' => 'Nome ou pontuação inválida', 'code' => 400], 400);
         }
 
-        $topPlayers = Leaderboard::orderBy('score', 'desc')->take(10)->get();
+        $topPlayers = LeaderBoard::orderBy('score', 'desc')->take(10)->get();
 
         if ($topPlayers->count() < 10) {
-            Leaderboard::create([
+            LeaderBoard::create([
                 'name' => $name,
                 'score' => $score
             ]);
@@ -30,7 +30,7 @@ class LeaderBoardController extends Controller
         if ($score > $minScore->score) {
             $minScore->delete();
 
-            Leaderboard::create([
+            LeaderBoard::create([
                 'name' => $name,
                 'score' => $score
             ]);
@@ -39,5 +39,15 @@ class LeaderBoardController extends Controller
         }
 
         return response()->json(['data' => 'Pontuação insuficiente para o top 10.', 'code' => 200], 200);
+    }
+    
+    public function index() {
+        $names = LeaderBoard::orderBy('score', 'desc')->get();
+
+        if (!$names->isEmpty()) {
+            return response()->json(['data' => $names, 'code' => 200], 200);
+        }
+
+        return response()->json(['message' => 'Nenhum user encontrado.', 'code' => 404], 404);
     }
 }

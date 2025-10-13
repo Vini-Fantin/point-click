@@ -17,4 +17,5 @@ class Place extends Model
         return $this->hasMany(Item::class);
     }
 
+    public $timestamps = false;
 }
