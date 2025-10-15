@@ -1,13 +1,12 @@
 "use client";
 import { useState } from "react";
 
-export default function ListaObjetos({ onClose }) {
-  const objetos = [
-    { nome: "Tapete Anti-derrapante", img: "tapete.jpg" },
-    { nome: "Tapete Anti-derrapante", img: "tapete.jpg" },
-    { nome: "Tapete Anti-derrapante", img: "tapete.jpg" },
-    { nome: "Tapete Anti-derrapante", img: "tapete.jpg" },
-  ];
+export default function ListaObjetos({ onClose, items }) {
+
+  const objetos = []
+  for (let item of items) {
+    objetos.push({name: item.name, img: `${item.id}.jpg`})
+  }
 
   const [dragging, setDragging] = useState(null);
 
@@ -97,7 +96,7 @@ export default function ListaObjetos({ onClose }) {
                   <img className="rounded-t-lg" src={obj.img} alt="" />
                   <div className="p-5 flex-1">
                     <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">
-                      {obj.nome}
+                      {obj.name}
                     </h5>
                   </div>
                 </button>

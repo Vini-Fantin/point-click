@@ -9,8 +9,7 @@ export async function getItems() {
 
   try {
     const data = await res.json(res)
-    console.log(data)
-    return data
+    return data.data
 
   } catch (err) {
     return []
