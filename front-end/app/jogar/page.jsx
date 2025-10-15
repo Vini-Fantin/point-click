@@ -5,10 +5,7 @@ import { getItems } from "../api/items";
 export default async function Page() {
 
   const data = await getItems()
-  console.log(data)
-  const items = data.filter((item) => item.places_id == 1)
-
-
+  const items = data
 
   return (
     <div className="w-screen h-screen bg-orange-400">
