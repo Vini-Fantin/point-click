@@ -4,6 +4,9 @@ import { getItems } from "../api/items";
 
 export default async function Page() {
 
+  const user = {name: 'teste', score: 0}
+  sessionStorage.setItem(JSON.stringify(user))
+
   const data = await getItems()
   const items = data
 
