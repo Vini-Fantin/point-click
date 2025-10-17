@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 10/10/2025 às 15:09
+-- Tempo de geração: 17/10/2025 às 14:25
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -30,8 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `items` (
   `id` int(11) NOT NULL,
   `name` varchar(225) NOT NULL,
-  `score` int(11) DEFAULT NULL,
-  `place_id` int(11) NOT NULL
+  `score` int(11) NOT NULL,
+  `places_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -46,6 +46,22 @@ CREATE TABLE `leaderboard` (
   `score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `leaderboard`
+--
+
+INSERT INTO `leaderboard` (`id`, `name`, `score`) VALUES
+(1, 'teste', 2000),
+(2, 'teste', 2000),
+(3, 'teste', 2000),
+(4, 'teste', 2000),
+(5, 'teste', 2000),
+(6, 'teste', 2000),
+(7, 'teste', 2000),
+(8, 'teste', 2000),
+(9, 'teste', 2000),
+(11, 'teste', 5000);
+
 -- --------------------------------------------------------
 
 --
@@ -54,7 +70,19 @@ CREATE TABLE `leaderboard` (
 
 CREATE TABLE `places` (
   `id` int(11) NOT NULL,
-  `name` varchar(225) NOT NULL
+  `name` varchar(225) NOT NULL,
+  `table1_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `room`
+--
+
+CREATE TABLE `room` (
+  `id` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -65,9 +93,9 @@ CREATE TABLE `places` (
 -- Índices de tabela `items`
 --
 ALTER TABLE `items`
-  ADD PRIMARY KEY (`id`,`place_id`),
+  ADD PRIMARY KEY (`id`,`places_id`),
   ADD UNIQUE KEY `id_UNIQUE` (`id`),
-  ADD KEY `fk_items_places_idx` (`place_id`);
+  ADD KEY `fk_items_places_idx` (`places_id`);
 
 --
 -- Índices de tabela `leaderboard`
@@ -80,6 +108,14 @@ ALTER TABLE `leaderboard`
 -- Índices de tabela `places`
 --
 ALTER TABLE `places`
+  ADD PRIMARY KEY (`id`,`table1_id`),
+  ADD UNIQUE KEY `id_UNIQUE` (`id`),
+  ADD KEY `fk_places_table11_idx` (`table1_id`);
+
+--
+-- Índices de tabela `room`
+--
+ALTER TABLE `room`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id_UNIQUE` (`id`);
 
@@ -97,12 +133,18 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT de tabela `leaderboard`
 --
 ALTER TABLE `leaderboard`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `places`
 --
 ALTER TABLE `places`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `room`
+--
+ALTER TABLE `room`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -113,7 +155,13 @@ ALTER TABLE `places`
 -- Restrições para tabelas `items`
 --
 ALTER TABLE `items`
-  ADD CONSTRAINT `fk_items_places` FOREIGN KEY (`place_id`) REFERENCES `places` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_items_places` FOREIGN KEY (`places_id`) REFERENCES `places` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Restrições para tabelas `places`
+--
+ALTER TABLE `places`
+  ADD CONSTRAINT `fk_places_table11` FOREIGN KEY (`table1_id`) REFERENCES `room` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
