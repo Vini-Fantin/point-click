@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 17/10/2025 às 14:25
+-- Tempo de geração: 17/10/2025 às 14:34
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -71,7 +71,7 @@ INSERT INTO `leaderboard` (`id`, `name`, `score`) VALUES
 CREATE TABLE `places` (
   `id` int(11) NOT NULL,
   `name` varchar(225) NOT NULL,
-  `table1_id` int(11) NOT NULL
+  `room_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -108,9 +108,9 @@ ALTER TABLE `leaderboard`
 -- Índices de tabela `places`
 --
 ALTER TABLE `places`
-  ADD PRIMARY KEY (`id`,`table1_id`),
+  ADD PRIMARY KEY (`id`,`room_id`),
   ADD UNIQUE KEY `id_UNIQUE` (`id`),
-  ADD KEY `fk_places_table11_idx` (`table1_id`);
+  ADD KEY `fk_places_table11_idx` (`room_id`);
 
 --
 -- Índices de tabela `room`
@@ -161,7 +161,7 @@ ALTER TABLE `items`
 -- Restrições para tabelas `places`
 --
 ALTER TABLE `places`
-  ADD CONSTRAINT `fk_places_table11` FOREIGN KEY (`table1_id`) REFERENCES `room` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_places_table11` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
