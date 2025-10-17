@@ -19,8 +19,11 @@ use App\Http\Controllers\LeaderBoardController;
 
 $router->get('/items-index', 'ItemController@index');
 
-$router->get('/places-index', 'placeController@index');
-$router->get('/places/{id}', 'placeController@show');
+$router->get('/places-index', 'PlaceController@index');
+$router->get('/places/{id}', 'PlaceController@show');
 
 $router->get('/leaderboard-index', 'LeaderBoardController@index');
 $router->post('/leaderboard', 'LeaderBoardController@store');
+
+$router->get('/room-index', 'RoomController@index');
+$router->get('/room/{id}', 'RoomController@show');
