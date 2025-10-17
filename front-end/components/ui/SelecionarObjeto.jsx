@@ -1,17 +1,16 @@
 "use client"
+
 import { useState } from "react"
 import ListaObjetos from "./ListaObjetos"
 
-export default function SelecionarObjeto({ x, y, items }) {
+export default function SelecionarObjeto({ x, y, items, onSubmit }) {
   const [visible, setVisible] = useState(false)
   const [selectedItem, setSelectedItem] = useState(null)
 
   function submit(item) {
     console.log(item)
     setSelectedItem(item)
-    
-
-
+    onSubmit(item)
     setVisible(false)
   }
 

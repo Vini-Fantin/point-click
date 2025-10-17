@@ -1,20 +1,14 @@
-import SalaDeEstar from "@/components/pages/SalaDeEstar";
-import { getItems } from "../api/items";
 
+import { getItems } from "../api/items";
+import JogarPage from "@/components/pages/JogarPage";
 
 export default async function Page() {
-
-  const user = {name: 'teste', score: 0}
-  sessionStorage.setItem(JSON.stringify(user))
-
-  const data = await getItems()
-  const items = data
+  
+  const items = await getItems()
 
   return (
     <div className="w-screen h-screen bg-orange-400">
-
-
-      <SalaDeEstar items={items}></SalaDeEstar>
+      <JogarPage items={items} jogadorNome={"Teste"}></JogarPage>
     </div>
   );
 }
