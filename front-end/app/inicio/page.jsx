@@ -1,5 +1,5 @@
 
-import MainMenu from "@/components/pages/MainMenu";
+import MainMenu from "../../components/pages/MainMenu";
 
 export default async function Page() {
 

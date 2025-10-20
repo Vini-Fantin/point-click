@@ -14,7 +14,7 @@ export default function ListaObjetos({ onClose, items, onSubmit }) {
 
 
   return (
-    <main className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/12 bg-white rounded shadow">
+    <main className="fixed top-1/2 left-1/2 transform z-50 -translate-x-1/2 -translate-y-1/2 w-4/12 bg-white rounded shadow">
       <div className="inline-flex justify-between w-full p-4 md:p-5 border-b rounded-t border-gray-200">
         <div>
           <h3 className="text-xl font-semibold text-gray-900">Lista de Objetos</h3>

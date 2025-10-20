@@ -1,38 +1,41 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import SalaDeEstar from "./SalaDeEstar"
-import ResultScreen from "./ResultScreen"
+import { useState, useEffect } from "react";
+import SalaDeEstar from "./SalaDeEstar";
+import Banheiro from "./Banheiro";
+import Cozinha from "./Cozinha";
+import ResultScreen from "./ResultScreen";
 
+export default function JogarPage({ rooms }) {
+  const [totalScore, setTotalScore] = useState(0);
+  const [roomsCleared, setRoomsCleared] = useState(0);
+  const [jogadorNome, setJogadorNome] = useState("");
 
-export default function JogarPage({ items, jogadorNome }) {
+  useEffect(() => {
+    const nome = sessionStorage.getItem("nome");
+    if (nome) setJogadorNome(nome);
+  }, []);
 
-    const [totalScore, setTotalScore] = useState(0)
-    const [roomsCleared, setRoomsCleared] = useState(0)
+  function handleRoomFinished(roomScore) {
+    setTotalScore(totalScore + roomScore);
+    setRoomsCleared(roomsCleared + 1);
+  }
+  
+  return (
+    <div className="h-full">
+      {roomsCleared === 0 && (
+        <SalaDeEstar room={rooms[0]} onFinished={handleRoomFinished} />
+      )}
+      {roomsCleared === 1 && (
+        <Banheiro room={rooms[1]} onFinished={handleRoomFinished} />
+      )}
+      {roomsCleared === 2 && (
+        <Cozinha room={rooms[2]} onFinished={handleRoomFinished} />
+      )}
 
-    function handleRoomFinished(roomScore) {
-        setTotalScore(totalScore + roomScore)
-        setRoomsCleared(roomsCleared + 1)
-    }
-
-    const [SalaDeEstarVisible, setSalaDeEstarVisible] = useState(true)
-    const [SalaCozinhaVisible, setSalaCozinhaVisible] = useState(false)
-    const [SalaQuartoVisible, setSalaQuartoVisible] = useState(false)
-    const [ResultScreenVisible, setResultScreenVisible] = useState(false)
-
-
-    return (
-        <div className="h-full">
-
-            {SalaDeEstarVisible &&
-                <SalaDeEstar items={items} onFinished={handleRoomFinished} />
-            }
-
-            {ResultScreenVisible && (
-                <ResultScreen resultado={{ nome: jogadorNome, score: totalScore }}></ResultScreen>
-            )}
-
-
-        </div>
-    )
+      {roomsCleared > 2 && (
+        <ResultScreen resultado={{ nome: jogadorNome, score: totalScore }} />
+      )}
+    </div>
+  );
 }

@@ -1,14 +1,17 @@
 
-import { getItems } from "../api/items";
-import JogarPage from "@/components/pages/JogarPage";
+import JogarPage from "../../components/pages/JogarPage";
+import { getItems } from "../api/item";
+import { getRoom } from "../api/rooms";
+import { getRooms } from "../api/rooms";
+
 
 export default async function Page() {
-  
-  const items = await getItems()
+
+  const roomData = await getRooms()
 
   return (
     <div className="w-screen h-screen bg-orange-400">
-      <JogarPage items={items} jogadorNome={"Teste"}></JogarPage>
+      <JogarPage rooms={roomData}></JogarPage>
     </div>
   );
 }
