@@ -1,13 +1,13 @@
--- MySQL Workbench Forward Engineering - Banco do zero com pelo menos 3 items por place e 10 jogadores "-----" com score 0
+-- MySQL Workbench Forward Engineering - Compatível com MySQL 5.x
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES';
 
 -- -----------------------------------------------------
 -- Schema pointclick_bd
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `pointclick_bd` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+CREATE SCHEMA IF NOT EXISTS `pointclick_bd` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `pointclick_bd`;
 
 -- -----------------------------------------------------
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `rooms` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(225) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
+  UNIQUE INDEX `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- -----------------------------------------------------
@@ -28,8 +28,8 @@ CREATE TABLE IF NOT EXISTS `places` (
   `name` VARCHAR(225) NOT NULL,
   `room_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_places_rooms_idx` (`room_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id`),
+  INDEX `fk_places_rooms_idx` (`room_id`),
   CONSTRAINT `fk_places_rooms`
     FOREIGN KEY (`room_id`)
     REFERENCES `rooms` (`id`)
@@ -46,8 +46,8 @@ CREATE TABLE IF NOT EXISTS `items` (
   `score` INT NOT NULL,
   `place_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_items_places_idx` (`place_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id`),
+  INDEX `fk_items_places_idx` (`place_id`),
   CONSTRAINT `fk_items_places`
     FOREIGN KEY (`place_id`)
     REFERENCES `places` (`id`)
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `leaderboard` (
   `name` VARCHAR(225) NOT NULL,
   `score` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
+  UNIQUE INDEX `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- -----------------------------------------------------
@@ -78,28 +78,24 @@ INSERT INTO rooms (name) VALUES
 
 -- Places
 INSERT INTO places (name, room_id) VALUES
--- Sala de Estar
 ('Próximo à Porta', 1),
 ('Centro do Cômodo', 1),
 ('Em cima de um Móvel', 1),
 ('Diversos', 1),
 ('Teto', 1),
--- Banheiro
 ('Próximo à Porta', 2),
 ('Centro do Cômodo', 2),
 ('Em cima de um Móvel', 2),
 ('Diversos', 2),
 ('Teto', 2),
--- Cozinha
 ('Próximo à Porta', 3),
 ('Centro do Cômodo', 3),
 ('Em cima de um Móvel', 3),
 ('Diversos', 3),
 ('Teto', 3);
 
--- Items (3 por place = 15 places * 3 = 45 items)
+-- Items
 INSERT INTO items (name, score, place_id) VALUES
--- Sala de Estar
 ('Tapete antiderrapante', 5, 1),
 ('Sapato velho frouxo', 1, 1),
 ('Chinelo de borracha novo', 5, 1),
@@ -115,8 +111,6 @@ INSERT INTO items (name, score, place_id) VALUES
 ('Lâmpada de LED nova', 5, 5),
 ('Fiação solta no teto', 1, 5),
 ('Ventilador de teto antigo', 2, 5),
-
--- Banheiro
 ('Tapete de borracha antiderrapante', 5, 6),
 ('Chinelo escorregadio', 1, 6),
 ('Balde de limpeza', 2, 6),
@@ -128,8 +122,6 @@ INSERT INTO items (name, score, place_id) VALUES
 ('Copo de vidro', 1, 9),
 ('Lâmpada queimada', 1, 10),
 ('Lâmpada de LED nova', 5, 10),
-
--- Cozinha
 ('Tapete fino', 5, 11),
 ('Pano de chão molhado', 1, 11),
 ('Chinelo de borracha', 5, 11),
@@ -141,8 +133,7 @@ INSERT INTO items (name, score, place_id) VALUES
 ('Lâmpada de LED nova', 5, 15),
 ('Fiação antiga', 2, 15);
 
-
--- Leaderboard (10 registros, todos com "-----" e score 0)
+-- Leaderboard
 INSERT INTO leaderboard (name, score) VALUES
 ('-----', 0),
 ('-----', 0),
@@ -155,6 +146,7 @@ INSERT INTO leaderboard (name, score) VALUES
 ('-----', 0),
 ('-----', 0);
 
+-- Resetando os modos
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
