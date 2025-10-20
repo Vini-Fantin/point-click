@@ -1,9 +1,11 @@
 "use client";
 
+import withReactContent from "sweetalert2-react-content";
 import { getItems } from "../../app/api/item";
 import { getPlaces } from "../../app/api/place";
 import SelecionarObjeto from "../ui/SelecionarObjeto";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 export default function Cozinha({ room, onFinished }) {
   const [qtdeObjetosSelecionados, setQtdeObjetosSelecionados] = useState(0);
@@ -17,10 +19,15 @@ export default function Cozinha({ room, onFinished }) {
 
     const scoreAtualizado = roomScore + item.score;
     setRoomScore(scoreAtualizado);
+  }
 
-    if (qtdeObjetosSelecionados >= 3) {
-      onFinished(roomScore); // já selecionou todos os objetos
-    }
+  function confirmation() {
+    withReactContent(Swal).fire({
+      icon: "success",
+      title: "Partida Finalizada!",
+      text: "Vejamos o resultado...",
+    });
+    onFinished(roomScore);
   }
 
   return (
@@ -57,6 +64,12 @@ export default function Cozinha({ room, onFinished }) {
         maxH={"100px"}
         maxW={"150px"}
       />
+      <button
+        className="bg-lime-400 z-51 rounded-md px-18 py-4 font-bold text-2xl fixed bottom-4 right-0 transform -translate-x-1/2 border-4 border-white "
+        onClick={() => confirmation()}
+      >
+        Próximo
+      </button>
     </div>
   );
 }

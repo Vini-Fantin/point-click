@@ -4,7 +4,7 @@ import { useState } from "react";
 export default function ListaObjetos({ onClose, items, onSubmit }) {
   const objetos = items.map((item) => ({
     name: item.name,
-    img: `${item.id}.png`,
+    id: item.id,
     score: item.score
   }));
 
@@ -14,7 +14,7 @@ export default function ListaObjetos({ onClose, items, onSubmit }) {
 
 
   return (
-    <main className="fixed top-1/2 left-1/2 transform z-50 -translate-x-1/2 -translate-y-1/2 w-4/12 bg-white rounded shadow">
+    <main className="fixed top-1/2 left-1/2 transform z-50 -translate-x-1/2 -translate-y-1/2 w-fit bg-white rounded shadow">
       <div className="inline-flex justify-between w-full p-4 md:p-5 border-b rounded-t border-gray-200">
         <div>
           <h3 className="text-xl font-semibold text-gray-900">Lista de Objetos</h3>
@@ -50,9 +50,9 @@ export default function ListaObjetos({ onClose, items, onSubmit }) {
             <div
               className="drag-wrapper cursor-pointer hover:scale-102 transition duration-150 ease-in-out active:scale-100" onClick={() => submit(obj)}
             >
-              <div className="flex flex-col h-full bg-white border border-gray-200 rounded-lg shadow-sm w-full">
-                <button>
-                  <img className="rounded-t-lg" src={obj.img} alt="" />
+              <div className="flex flex-col h-full bg-white border items-center border-gray-200 rounded-lg shadow-sm w-full">
+                <button className="flex flex-col items-center">
+                  <img className="rounded-t-lg h-40" src={`${obj.id}.png`} alt="" />
                   <div className="p-5 flex-1">
                     <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">
                       {obj.name}

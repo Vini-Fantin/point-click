@@ -1,8 +1,5 @@
 "use client";
 
-import { getItems } from "../../app/api/item";
-import { getPlaces } from "../../app/api/place";
-
 import SelecionarObjeto from "../ui/SelecionarObjeto";
 import { useState } from "react";
 
@@ -19,41 +16,42 @@ export default function Banheiro({ room, onFinished }) {
 
     const scoreAtualizado = roomScore + item.score;
     setRoomScore(scoreAtualizado);
+  }
 
-    if (qtdeObjetosSelecionados >= 4) {
-      withReactContent(Swal).fire({
-        icon: "success",
-        title: "Sala Completa!",
-        text: "Vamos para a próxima...",
-      });
-      onFinished(roomScore); // já selecionou todos os objetos
-    }
+  function confirmation() {
+    withReactContent(Swal).fire({
+      icon: "success",
+      title: "Sala Completa!",
+      text: "Vamos para a próxima...",
+    });
+    onFinished(roomScore); // já selecionou todos os objetos
   }
 
   return (
     <div className="bg-[url('/banheiro.jpg')] bg-cover w-full h-full">
+      <h1 className="text-2xl">Pontuação do Cômodo: {roomScore}</h1>
       <SelecionarObjeto
         x={420}
-        y={800}
+        y={825}
         items={room.places.filter((place) => place.id == 6)[0].items}
         onSubmit={onItemSelection}
-        maxH={"150px"}
-        maxW={"220px"}
-      />
-      <SelecionarObjeto
-        x={800}
-        y={470}
-        items={room.places.filter((place) => place.id == 7)[0].items}
-        onSubmit={onItemSelection}
-        maxH={"300px"}
+        maxH={"100px"}
         maxW={"200px"}
       />
       <SelecionarObjeto
+        x={800}
+        y={450}
+        items={room.places.filter((place) => place.id == 7)[0].items}
+        onSubmit={onItemSelection}
+        maxH={"100px"}
+        maxW={"300px"}
+      />
+      <SelecionarObjeto
         x={860}
-        y={830}
+        y={800}
         items={room.places.filter((place) => place.id == 8)[0].items}
         onSubmit={onItemSelection}
-        maxH={"200px"}
+        maxH={"100px"}
         maxW={"250px"}
       />
       <SelecionarObjeto
@@ -62,16 +60,23 @@ export default function Banheiro({ room, onFinished }) {
         items={room.places.filter((place) => place.id == 9)[0].items}
         onSubmit={onItemSelection}
         maxH={"100px"}
-        maxW={"150px"}
+        maxW={"120px"}
       />
       <SelecionarObjeto
-        x={1000}
+        x={900}
         y={0}
         items={room.places.filter((place) => place.id == 10)[0].items}
         onSubmit={onItemSelection}
         maxH={"100px"}
-        maxW={"350px"}
+        maxW={"100px"}
       />
+      <button
+        className="bg-lime-400 z-51 rounded-md px-18 py-4 font-bold text-2xl fixed bottom-4 right-0 transform -translate-x-1/2 border-4 border-white "
+        onClick={() => confirmation()}
+      >
+        Próximo
+      </button>
     </div>
   );
 }
+

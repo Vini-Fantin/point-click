@@ -43,3 +43,17 @@ export async function getItems(roomId:number) {
     }
 }
 
+export async function getItemById(itemId:number) {
+    try {
+        const item = await prisma.items.findUnique({
+            where: {
+                id: itemId
+            }
+        })
+
+        return item
+    } catch (error) {
+        
+    }
+
+}
