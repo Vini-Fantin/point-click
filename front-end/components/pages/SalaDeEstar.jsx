@@ -64,12 +64,12 @@ export default function SalaDeEstar({ room, onFinished }) {
         maxW={"400px"}
       />
       <SelecionarObjeto
-        x={900}
-        y={0}
+        x={840}
+        y={-5}
         items={room.places.filter((place) => place.id == 5)[0].items}
         onSubmit={onItemSelection}
-        maxH={"100px"}
-        maxW={"80px"}
+        maxH={"150px"}
+        maxW={"280px"}
       />
       <button
         className="bg-lime-400 z-51 rounded-md px-18 py-4 font-bold text-2xl fixed bottom-4 right-0 transform -translate-x-1/2 border-4 border-white "
