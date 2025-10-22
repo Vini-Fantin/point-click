@@ -108,9 +108,9 @@ INSERT INTO items (name, score, place_id) VALUES
 ('Cadeira de apoio firme', 5, 2),
 ('Abajur com botão acessível', 5, 3),
 ('Controle remoto', 4, 3),
-('Copo de vidro', 2, 3),
+('Copo de vidro', 3, 3),
 ('Tapete pequeno', 2, 4),
-('Cobertor caído', 2, 4),
+('Cobertor caído', 1, 4),
 ('Mesa com quina protegida', 5, 4),
 ('Lâmpada de LED nova', 5, 5),
 ('Fiação solta no teto', 1, 5),
@@ -122,10 +122,10 @@ INSERT INTO items (name, score, place_id) VALUES
 ('Balde de limpeza', 2, 6),
 ('Corrimão', 3, 7),
 ('Barras de apoio', 5, 7),
-('Toalha caída no chão', 2, 8),
-('Piso molhado', 3, 8),
+('Toalha caída no chão', 1, 8),
+('Piso molhado', 1, 8),
 ('Remédios abertos', 2, 9),
-('Copo de vidro', 1, 9),
+('Copo de vidro', 3, 9),
 ('Lâmpada queimada', 1, 10),
 ('Lâmpada de LED nova', 5, 10),
 
@@ -136,10 +136,10 @@ INSERT INTO items (name, score, place_id) VALUES
 ('Banco com apoio firme', 5, 12),
 ('Armário baixo acessível', 5, 12),
 ('Prato de vidro', 1, 13),
-('Nada', 5, 13),
+('Nada', 3, 13),
 ('Panela grande', 2, 13),
 ('Lâmpada de LED nova', 5, 15),
-('Fiação antiga', 2, 15);
+('Fiação antiga', 1, 15);
 
 
 -- Leaderboard (10 registros, todos com "-----" e score 0)
