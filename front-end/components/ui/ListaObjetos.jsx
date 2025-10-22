@@ -9,9 +9,8 @@ export default function ListaObjetos({ onClose, items, onSubmit }) {
   }));
 
   function submit(item) {
-    onSubmit(item)
+    onSubmit(item);
   }
-
 
   return (
     <main className="fixed top-1/2 left-1/2 transform z-50 -translate-x-1/2 -translate-y-1/2 w-fit bg-white rounded shadow">
@@ -48,9 +47,10 @@ export default function ListaObjetos({ onClose, items, onSubmit }) {
         {objetos.map((obj, i) => (
           <li key={i}>
             <div
-              className="drag-wrapper cursor-pointer hover:scale-102 transition duration-150 ease-in-out active:scale-100" onClick={() => submit(obj)}
+              className="drag-wrapper cursor-pointer hover:scale-102 transition duration-150 ease-in-out active:scale-100"
+              onClick={() => submit(obj)}
             >
-              <div className="flex flex-col h-full bg-white border items-center border-gray-200 rounded-lg shadow-sm w-full">
+              <div className="flex flex-col h-full bg-white border items-center border-gray-200 rounded-lg w-full">
                 <button className="flex flex-col items-center">
                   <img className="rounded-t-lg h-40" src={`${obj.id}.png`} alt="" />
                   <div className="p-5 flex-1">

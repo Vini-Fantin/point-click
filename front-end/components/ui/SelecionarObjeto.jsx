@@ -23,11 +23,10 @@ export default function SelecionarObjeto({ x, y, items, onSubmit, maxW, maxH }) 
 
   return (
     <div style={{ position: "absolute", left: x, top: y }}>
-
       <>
         <button
-          onClick={() => {setVisible(!visible); }} style={{ maxWidth: maxW, minWidth: maxW, maxHeight: maxH, minHeight: maxH }}
-          className=" z-40 cursor-pointer transition duration-150 ease-in-out hover:scale-105 active:scale-100 active:shadow-lg"
+          onClick={() => { setVisible(!visible); }} style={{ maxWidth: maxW, minWidth: maxW, maxHeight: maxH, minHeight: maxH }}
+          className=" z-40 cursor-pointer transition duration-150 ease-in-out hover:scale-105 active:scale-100 "
         >
           <img src={`${selectedItem.id}.png`} style={{ maxWidth: maxW, minWidth: maxW, maxHeight: maxH, minHeight: maxH }}></img>
         </button>

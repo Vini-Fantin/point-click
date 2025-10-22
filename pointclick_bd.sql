@@ -7,7 +7,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema pointclick_bd
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `pointclick_bd`;
+CREATE SCHEMA IF NOT EXISTS `pointclick_bd` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE `pointclick_bd`;
 
 -- -----------------------------------------------------
@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS `rooms` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(225) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) 
-) ENGINE=InnoDB;
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- -----------------------------------------------------
 -- Table `places`
@@ -28,14 +28,14 @@ CREATE TABLE IF NOT EXISTS `places` (
   `name` VARCHAR(225) NOT NULL,
   `room_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  INDEX `fk_places_rooms_idx` (`room_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_places_rooms_idx` (`room_id` ASC) VISIBLE,
   CONSTRAINT `fk_places_rooms`
     FOREIGN KEY (`room_id`)
     REFERENCES `rooms` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- -----------------------------------------------------
 -- Table `items`
@@ -46,14 +46,14 @@ CREATE TABLE IF NOT EXISTS `items` (
   `score` INT NOT NULL,
   `place_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
-  INDEX `fk_items_places_idx` (`place_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_items_places_idx` (`place_id` ASC) VISIBLE,
   CONSTRAINT `fk_items_places`
     FOREIGN KEY (`place_id`)
     REFERENCES `places` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- -----------------------------------------------------
 -- Table `leaderboard`
@@ -63,8 +63,8 @@ CREATE TABLE IF NOT EXISTS `leaderboard` (
   `name` VARCHAR(225) NOT NULL,
   `score` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) 
-) ENGINE=InnoDB;
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- -----------------------------------------------------
 -- Inserção de dados
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `leaderboard` (
 INSERT INTO rooms (name) VALUES
 ('Sala de Estar'),
 ('Banheiro'),
-('Cozinha');
+('Quarto');
 
 -- Places
 INSERT INTO places (name, room_id) VALUES
@@ -97,7 +97,7 @@ INSERT INTO places (name, room_id) VALUES
 ('Diversos', 3),
 ('Teto', 3);
 
--- Items (sem "Nada" por enquanto)
+-- Items (3 por place = 15 places * 3 = 45 items)
 INSERT INTO items (name, score, place_id) VALUES
 -- Sala de Estar
 ('Tapete antiderrapante', 5, 1),
@@ -108,9 +108,9 @@ INSERT INTO items (name, score, place_id) VALUES
 ('Cadeira de apoio firme', 5, 2),
 ('Abajur com botão acessível', 5, 3),
 ('Controle remoto', 4, 3),
-('Copo de vidro', 3, 3),
+('Copo de vidro', 2, 3),
 ('Tapete pequeno', 2, 4),
-('Cobertor caído', 1, 4),
+('Cobertor caído', 2, 4),
 ('Mesa com quina protegida', 5, 4),
 ('Lâmpada de LED nova', 5, 5),
 ('Fiação solta no teto', 1, 5),
@@ -122,10 +122,10 @@ INSERT INTO items (name, score, place_id) VALUES
 ('Balde de limpeza', 2, 6),
 ('Corrimão', 3, 7),
 ('Barras de apoio', 5, 7),
-('Toalha caída no chão', 1, 8),
-('Piso molhado', 1, 8),
+('Toalha caída no chão', 2, 8),
+('Piso molhado', 3, 8),
 ('Remédios abertos', 2, 9),
-('Copo de vidro', 3, 9),
+('Copo de vidro', 1, 9),
 ('Lâmpada queimada', 1, 10),
 ('Lâmpada de LED nova', 5, 10),
 
@@ -136,11 +136,13 @@ INSERT INTO items (name, score, place_id) VALUES
 ('Banco com apoio firme', 5, 12),
 ('Armário baixo acessível', 5, 12),
 ('Prato de vidro', 1, 13),
+('Nada', 5, 13),
 ('Panela grande', 2, 13),
 ('Lâmpada de LED nova', 5, 15),
-('Fiação antiga', 1, 15);
+('Fiação antiga', 2, 15);
 
--- Leaderboard
+
+-- Leaderboard (10 registros, todos com "-----" e score 0)
 INSERT INTO leaderboard (name, score) VALUES
 ('-----', 0),
 ('-----', 0),
@@ -153,20 +155,6 @@ INSERT INTO leaderboard (name, score) VALUES
 ('-----', 0),
 ('-----', 0);
 
--- -----------------------------------------------------
--- Garantir que todos os places tenham item "Nada" com score 3
--- -----------------------------------------------------
-
--- 1. Remove todos os "Nada" existentes (para evitar duplicatas ou score incorreto)
-DELETE FROM items WHERE name = 'Nada';
-
--- 2. Insere "Nada" com score 3 em todos os places
-INSERT INTO items (name, score, place_id)
-SELECT 'Nada', 3, id FROM places;
-
--- -----------------------------------------------------
--- Restaura configurações
--- -----------------------------------------------------
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
