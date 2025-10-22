@@ -7,7 +7,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema pointclick_bd
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `pointclick_bd` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+CREATE SCHEMA IF NOT EXISTS `pointclick_bd`;
 USE `pointclick_bd`;
 
 -- -----------------------------------------------------
@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS `rooms` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(225) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) 
+) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
 -- Table `places`
@@ -28,14 +28,14 @@ CREATE TABLE IF NOT EXISTS `places` (
   `name` VARCHAR(225) NOT NULL,
   `room_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_places_rooms_idx` (`room_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_places_rooms_idx` (`room_id` ASC) ,
   CONSTRAINT `fk_places_rooms`
     FOREIGN KEY (`room_id`)
     REFERENCES `rooms` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
 -- Table `items`
@@ -46,14 +46,14 @@ CREATE TABLE IF NOT EXISTS `items` (
   `score` INT NOT NULL,
   `place_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_items_places_idx` (`place_id` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_items_places_idx` (`place_id` ASC) ,
   CONSTRAINT `fk_items_places`
     FOREIGN KEY (`place_id`)
     REFERENCES `places` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
 -- Table `leaderboard`
@@ -63,8 +63,8 @@ CREATE TABLE IF NOT EXISTS `leaderboard` (
   `name` VARCHAR(225) NOT NULL,
   `score` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) 
+) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
 -- Inserção de dados
@@ -97,7 +97,7 @@ INSERT INTO places (name, room_id) VALUES
 ('Diversos', 3),
 ('Teto', 3);
 
--- Items (3 por place = 15 places * 3 = 45 items)
+-- Items (sem "Nada" por enquanto)
 INSERT INTO items (name, score, place_id) VALUES
 -- Sala de Estar
 ('Tapete antiderrapante', 5, 1),
@@ -136,13 +136,11 @@ INSERT INTO items (name, score, place_id) VALUES
 ('Banco com apoio firme', 5, 12),
 ('Armário baixo acessível', 5, 12),
 ('Prato de vidro', 1, 13),
-('Nada', 3, 13),
 ('Panela grande', 2, 13),
 ('Lâmpada de LED nova', 5, 15),
 ('Fiação antiga', 1, 15);
 
-
--- Leaderboard (10 registros, todos com "-----" e score 0)
+-- Leaderboard
 INSERT INTO leaderboard (name, score) VALUES
 ('-----', 0),
 ('-----', 0),
@@ -155,6 +153,20 @@ INSERT INTO leaderboard (name, score) VALUES
 ('-----', 0),
 ('-----', 0);
 
+-- -----------------------------------------------------
+-- Garantir que todos os places tenham item "Nada" com score 3
+-- -----------------------------------------------------
+
+-- 1. Remove todos os "Nada" existentes (para evitar duplicatas ou score incorreto)
+DELETE FROM items WHERE name = 'Nada';
+
+-- 2. Insere "Nada" com score 3 em todos os places
+INSERT INTO items (name, score, place_id)
+SELECT 'Nada', 3, id FROM places;
+
+-- -----------------------------------------------------
+-- Restaura configurações
+-- -----------------------------------------------------
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
