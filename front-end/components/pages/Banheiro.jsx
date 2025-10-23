@@ -46,11 +46,11 @@ export default function Banheiro({ room, onFinished }) {
   }
 
   const posicoes = {
-    6: { x: 420, y: 825, maxW: "200px", maxH: "100px" },
-    7: { x: 800, y: 450, maxW: "300px", maxH: "100px" },
-    8: { x: 860, y: 800, maxW: "250px", maxH: "100px" },
-    9: { x: 200, y: 480, maxW: "120px", maxH: "100px" },
-    10: { x: 900, y: 0,   maxW: "100px", maxH: "100px" },
+    6: { x: 420, y: 505, maxW: "200px", maxH: "100px" }, // tapete pia
+    7: { x: 500, y: 450, maxW: "300px", maxH: "100px" }, // barra
+    8: { x: 500, y: 500, maxW: "250px", maxH: "100px" }, // tapete
+    9: { x: 500, y: 480, maxW: "120px", maxH: "100px" }, // copo
+    10: { x: 570, y: 0,   maxW: "400px", maxH: "400px" }, // lampada
   };
 
   return (
