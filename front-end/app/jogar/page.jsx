@@ -10,7 +10,7 @@ export default async function Page() {
   const roomData = await getRooms()
 
   return (
-    <div className="w-screen h-screen bg-orange-400">
+    <div className="w-screen h-screen bg-orange-400 overflow-hidden">
       <JogarPage rooms={roomData}></JogarPage>
     </div>
   );

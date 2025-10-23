@@ -54,7 +54,7 @@ export default function Banheiro({ room, onFinished }) {
   };
 
   return (
-    <div className="bg-[url('/banheiro.jpg')] bg-cover w-full h-full">
+    <div className="bg-[url('/banheiro.png')] bg-cover bg-contain bg-center w-screen h-screen relative overflow-hidden">
       <h1 className="text-2xl">Pontuação do Cômodo: {pontuacoes.reduce((total, val) => total + val, 0)}</h1>
 
       {places.map((place) => {

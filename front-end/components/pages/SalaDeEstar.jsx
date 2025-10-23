@@ -45,15 +45,15 @@ export default function SalaDeEstar({ room, onFinished }) {
   }
 
   const posicoes = {
-    1: { x: 420, y: 800, maxW: "150px", maxH: "100px" },
-    2: { x: 1500, y: 640, maxW: "300px", maxH: "220px" },
-    3: { x: 1350, y: 490, maxW: "100px", maxH: "200px" },
-    4: { x: 800, y: 750, maxW: "400px", maxH: "180px" },
-    5: { x: 840, y: -5, maxW: "280px", maxH: "150px" },
+    1: { x: 1450, y: 380, maxW: "500px", maxH: "500px" }, // tapete
+    2: { x: 300, y: 425, maxW: "500px", maxH: "500px" }, // apoiador
+    3: { x: 1150, y: 280, maxW: "500px", maxH: "500px" }, // abajur
+    4: { x: 720, y: 420, maxW: "500px", maxH: "500px" }, // tapete
+    5: { x: 760, y: -5, maxW: "500px", maxH: "500px" },  // lampada
   };
 
   return (
-    <div className="bg-[url('/sala-de-estar.jpg')] bg-cover w-full h-full">
+    <div className="bg-[url('/sala-de-estar.png')] bg-cover bg-center w-screen h-screen relative overflow-hidden">
       <h1 className="text-2xl">
         Pontuação do Cômodo: {pontuacoes.reduce((total, val) => total + val, 0)}
       </h1>

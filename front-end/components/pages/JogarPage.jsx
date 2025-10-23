@@ -22,7 +22,7 @@ export default function JogarPage({ rooms }) {
   }
   
   return (
-    <div className="h-full">
+    <div className="h-full w-full">
       {roomsCleared === 0 && (
         <SalaDeEstar room={rooms[0]} onFinished={handleRoomFinished} />
       )}
