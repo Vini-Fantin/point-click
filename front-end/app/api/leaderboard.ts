@@ -5,19 +5,23 @@ import prisma from "../../lib/prisma";
 export async function getLeaderboard() {
   return await prisma.leaderboard.findMany({
     orderBy: { score: "desc" },
-    take: 10, // sempre retorna o top 10
+    take: 10,
   });
 }
 
-export async function updateLeaderboard({ nome, score }) {
+export async function updateLeaderboard({ nome, score }: { nome: string; score: number }) {
+
+  const safeName = (nome ?? "").trim();
+  if (!safeName || safeName.toLowerCase() === "teste") return;
+
   const existing = await prisma.leaderboard.findFirst({
-    where: { name: nome },
+    where: { name: safeName },
   });
 
   if (existing) {
-    if (score > existing.score) {
+    if (score > (existing as any).score) {
       await prisma.leaderboard.update({
-        where: { id: existing.id },
+        where: { id: (existing as any).id },
         data: { score },
       });
     }
@@ -26,17 +30,17 @@ export async function updateLeaderboard({ nome, score }) {
 
     if (count < 10) {
       await prisma.leaderboard.create({
-        data: { name: nome, score },
+        data: { name: safeName, score },
       });
     } else {
-      const lowest = await prisma.leaderboard.findFirst({
+      const lowest: any = await prisma.leaderboard.findFirst({
         orderBy: { score: "asc" },
       });
 
-      if (score > lowest.score) {
+      if (lowest && score > lowest.score) {
         await prisma.leaderboard.update({
           where: { id: lowest.id },
-          data: { name: nome, score },
+          data: { name: safeName, score },
         });
       }
     }

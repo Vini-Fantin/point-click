@@ -18,10 +18,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-br">
-      <body
-        className={`${roboto.className} antialiased`}
-      >
-        {children}
+      <body className={`${roboto.className} antialiased bg-[--color-bg] text-gray-900`}>
+        <link rel="preload" as="image" href="/sala-de-estar.png" />
+        <link rel="preload" as="image" href="/banheiro.png" />
+        <link rel="preload" as="image" href="/cozinha.jpg" />
+        <div className="min-h-screen">{children}</div>
       </body>
     </html>
   );

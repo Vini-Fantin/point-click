@@ -34,7 +34,19 @@ export default function SalaDeEstar({ room, onFinished }) {
       text: "Vamos para a próxima...",
     });
 
-    onFinished(pontuacoes.reduce((total, val) => total + val, 0));
+    const roomScore = pontuacoes.reduce((total, val) => total + val, 0);
+    const mistakes = [];
+    room.places.forEach((place) => {
+      const index = place.id - 1;
+      const chosen = itensSelecionados[index];
+      const defaultItem = place.items[0];
+      // pontuação até 3 => considerado erro
+      if ((chosen?.score ?? defaultItem.score) <= 3 && chosen?.id !== defaultItem.id) {
+        mistakes.push({ room: room.name || "Sala de Estar", placeId: place.id, itemName: chosen?.name || defaultItem.name });
+      }
+    });
+
+    onFinished({ score: roomScore, mistakes });
   }
 
   function getImagemDoPlace(placeId) {
@@ -54,7 +66,7 @@ export default function SalaDeEstar({ room, onFinished }) {
 
   return (
     <div className="bg-[url('/sala-de-estar.png')] bg-cover bg-center w-screen h-screen relative overflow-hidden">
-      <h1 className="text-2xl">
+      <h1 className="text-2xl glass rounded px-3 py-1 absolute top-4 left-4 z-50">
         Pontuação do Cômodo: {pontuacoes.reduce((total, val) => total + val, 0)}
       </h1>
 
@@ -92,10 +104,10 @@ export default function SalaDeEstar({ room, onFinished }) {
       )}
 
       <button
-        className="bg-lime-400 z-51 rounded-md px-18 py-4 font-bold text-2xl fixed bottom-4 right-0 transform -translate-x-1/2 border-4 border-white"
+        className="bg-green-500 hover:bg-[--color-brand-700] text-white z-51 rounded-md px-8 py-3 font-bold text-xl fixed bottom-6 right-6 shadow-lg"
         onClick={confirmation}
       >
-        Próximo
+        Próximo Cõmodo
       </button>
     </div>
   );

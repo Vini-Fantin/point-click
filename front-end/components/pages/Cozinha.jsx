@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 export default function Cozinha({ room, onFinished }) {
   const [qtdeObjetosSelecionados, setQtdeObjetosSelecionados] = useState(0);
   const [roomScore, setRoomScore] = useState(0);
+  const [selected, setSelected] = useState({});
 
 
 
@@ -19,6 +20,7 @@ export default function Cozinha({ room, onFinished }) {
 
     const scoreAtualizado = roomScore + item.score;
     setRoomScore(scoreAtualizado);
+    setSelected((prev) => ({ ...prev, [item.id]: item }));
   }
 
   function confirmation() {
@@ -27,11 +29,21 @@ export default function Cozinha({ room, onFinished }) {
       title: "Partida Finalizada!",
       text: "Vejamos o resultado...",
     });
-    onFinished(roomScore);
+    const mistakes = [];
+    [11,12,13,15].forEach((pid) => {
+      const place = room.places.find((p) => p.id == pid);
+      if (!place) return;
+      const chosen = Object.values(selected).find((i) => place.items.some((pi) => pi.id === i.id));
+      const defaultItem = place.items[0];
+      if ((chosen?.score ?? defaultItem.score) <= 3 && chosen?.id !== defaultItem.id) {
+        mistakes.push({ room: room.name || "Cozinha", placeId: place.id, itemName: chosen?.name || defaultItem.name });
+      }
+    });
+    onFinished({ score: roomScore, mistakes });
   }
 
   return (
-    <div className="bg-[url('/cozinha.jpg')] bg-cover w-full h-full">
+    <div className="bg-[url('/cozinha.jpg')] bg-cover bg-center w-screen h-screen relative overflow-hidden">
       <SelecionarObjeto
         x={1140}
         y={800}
@@ -65,10 +77,10 @@ export default function Cozinha({ room, onFinished }) {
         maxW={"150px"}
       />
       <button
-        className="bg-lime-400 z-51 rounded-md px-18 py-4 font-bold text-2xl fixed bottom-4 right-0 transform -translate-x-1/2 border-4 border-white "
-        onClick={() => confirmation()}
+        className="bg-green-500 hover:bg-[--color-brand-700] text-white z-51 rounded-md px-8 py-3 font-bold text-xl fixed bottom-6 right-6 shadow-lg"
+        onClick={confirmation}
       >
-        Próximo
+        Finalizar Jogo
       </button>
     </div>
   );

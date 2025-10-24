@@ -35,7 +35,18 @@ export default function Banheiro({ room, onFinished }) {
       text: "Vamos para a próxima...",
     });
 
-    onFinished(pontuacoes.reduce((total, valorAtual) => total + valorAtual, 0));
+    const roomScore = pontuacoes.reduce((total, valorAtual) => total + valorAtual, 0);
+    const mistakes = [];
+    places.forEach((place) => {
+      const index = place.id - 6;
+      const chosen = itensSelecionados[index];
+      const defaultItem = place.items[0];
+      if ((chosen?.score ?? defaultItem.score) <= 3 && chosen?.id !== defaultItem.id) {
+        mistakes.push({ room: room.name || "Banheiro", placeId: place.id, itemName: chosen?.name || defaultItem.name });
+      }
+    });
+
+    onFinished({ score: roomScore, mistakes });
   }
 
   function getImagemDoPlace(placeId) {
@@ -49,13 +60,13 @@ export default function Banheiro({ room, onFinished }) {
     6: { x: 520, y: 805, maxW: "200px", maxH: "100px" }, // tapete pia
     7: { x: 820, y: 450, maxW: "300px", maxH: "100px" }, // barra
     8: { x: 800, y: 800, maxW: "250px", maxH: "100px" }, // tapete
-    9: { x: 200, y:420, maxW: "50px", maxH: "100px" }, // copo
-    10: { x: 765, y: 0,   maxW: "400px", maxH: "400px" }, // lampada
+    9: { x: 200, y: 420, maxW: "50px", maxH: "100px" }, // copo
+    10: { x: 765, y: 0, maxW: "400px", maxH: "400px" }, // lampada
   };
 
   return (
-    <div className="bg-[url('/banheiro.png')] bg-cover bg-contain bg-center w-screen h-screen relative overflow-hidden">
-      <h1 className="text-2xl">Pontuação do Cômodo: {pontuacoes.reduce((total, val) => total + val, 0)}</h1>
+    <div className="bg-[url('/banheiro.jpg')] bg-cover bg-center w-screen h-screen relative overflow-hidden">
+      <h1 className="text-2xl glass rounded px-3 py-1 absolute top-4 left-4 z-50">Pontuação do Cômodo: {pontuacoes.reduce((total, val) => total + val, 0)}</h1>
 
       {places.map((place) => {
         const { x, y, maxW, maxH } = posicoes[place.id];
@@ -91,10 +102,10 @@ export default function Banheiro({ room, onFinished }) {
       )}
 
       <button
-        className="bg-lime-400 z-51 rounded-md px-18 py-4 font-bold text-2xl fixed bottom-4 right-0 transform -translate-x-1/2 border-4 border-white"
+        className="bg-green-500 hover:bg-[--color-brand-700] text-white z-51 rounded-md px-8 py-3 font-bold text-xl fixed bottom-6 right-6 shadow-lg"
         onClick={confirmation}
       >
-        Próximo
+        Próximo Cõmodo
       </button>
     </div>
   );
