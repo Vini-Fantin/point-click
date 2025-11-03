@@ -172,7 +172,7 @@ INSERT INTO leaderboard (name, score) VALUES
 DELETE FROM items WHERE name = 'Nada';
 
 INSERT INTO items (name, score, place_id)
-SELECT 'Nada', 3, id FROM places;
+SELECT 'Nenhuma das opções', 3, id FROM places;
 
 -- -----------------------------------------------------
 -- Restaura configurações

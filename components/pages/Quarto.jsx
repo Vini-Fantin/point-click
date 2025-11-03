@@ -35,8 +35,8 @@ export default function Quarto({ room, onFinished }) {
   function confirmation() {
     withReactContent(Swal).fire({
       icon: "success",
-      title: "Sala Completa!",
-      text: "Vamos para a próxima...",
+      title: "Partida Finalizada!",
+      text: "Vamos ao resultado...",
     });
 
     const roomScore = pontuacoes.reduce(
@@ -122,7 +122,7 @@ export default function Quarto({ room, onFinished }) {
         className="bg-green-500 hover:bg-[--color-brand-700] text-white z-51 rounded-md px-8 py-3 font-bold text-xl fixed bottom-6 right-6 shadow-lg"
         onClick={confirmation}
       >
-        Próximo Cômodo
+        Finalizar Partida
       </button>
     </div>
   );
