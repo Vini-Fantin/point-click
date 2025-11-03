@@ -72,9 +72,9 @@ export default function Quarto({ room, onFinished }) {
   }
 
   const posicoes = {
-    11: { x: 1050, y: 700, maxW: "500px", maxH: "300px" }, // tapete
-    12: { x: 1450, y: 470, maxW: "100px", maxH: "150px" }, // abajur
-    13: { x: 300, y: 500, maxW: "250px", maxH: "100px" }, // puff
+    11: { x: 1050, y: 800, maxW: "500px", maxH: "300px" }, // tapete
+    12: { x: 1450, y: 535, maxW: "100px", maxH: "150px" }, // abajur
+    13: { x: 300, y: 600, maxW: "250px", maxH: "100px" }, // puff
     14: { x: 760, y: -5, maxW: "400px", maxH: "230px" },  // lampada
     15: { x: 300, y: 500, maxW: "50px", maxH: "100px" }, // Não mexer nesse item
   };

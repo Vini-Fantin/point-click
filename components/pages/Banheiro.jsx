@@ -57,10 +57,10 @@ export default function Banheiro({ room, onFinished }) {
   }
 
   const posicoes = {
-    6: { x: 250, y: 900, maxW: "200px", maxH: "100px" }, // tapete pia
+    6: { x: 250, y: 850, maxW: "200px", maxH: "100px" }, // tapete pia
     7: { x: 1550, y: 600, maxW: "180px", maxH: "50px" }, // barra
-    8: { x: 835, y: 800, maxW: "250px", maxH: "100px" }, // tapete
-    9: { x: 200, y: 500, maxW: "50px", maxH: "100px" }, // copo
+    8: { x: 835, y: 900, maxW: "250px", maxH: "100px" }, // tapete
+    9: { x: 200, y: 560, maxW: "50px", maxH: "100px" }, // copo
     10: { x:920, y: 0, maxW: "80px", maxH: "80px" }, // lampada
   };
 

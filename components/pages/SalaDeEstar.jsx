@@ -58,10 +58,10 @@ export default function SalaDeEstar({ room, onFinished }) {
   }
 
   const posicoes = {
-    1: { x: 1600, y: 730, maxW: "200px", maxH: "100px" }, // tapete
-    2: { x: 380, y: 600, maxW: "280px", maxH: "250px" }, // apoiador
-    3: { x: 1345, y: 470, maxW: "100px", maxH: "150px" }, // abajur
-    4: { x: 720, y: 750, maxW: "480px", maxH: "180px" }, // tapete
+    1: { x: 1600, y: 800, maxW: "200px", maxH: "100px" }, // tapete porta
+    2: { x: 380, y: 680, maxW: "280px", maxH: "250px" }, // apoiador
+    3: { x: 1345, y: 530, maxW: "100px", maxH: "150px" }, // abajur
+    4: { x: 720, y: 820, maxW: "480px", maxH: "180px" }, // tapete meio
     5: { x: 760, y: -5, maxW: "400px", maxH: "230px" },  // lampada
   };
 
