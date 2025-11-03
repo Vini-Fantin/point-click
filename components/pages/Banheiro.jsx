@@ -7,7 +7,12 @@ import ListaObjetos from "../ui/ListaObjetos";
 
 export default function Banheiro({ room, onFinished }) {
   const places = room.places.filter((place) => place.id >= 6 && place.id <= 10);
-  const itensPadrao = places.map(place => place.items[0]);
+  const itensPadrao = places.map(place => {
+    const items = place.items || [];
+    const pool = items.filter((i) => i?.name !== "Nenhuma das opções");
+    const source = pool.length > 0 ? pool : items;
+    return source[Math.floor(Math.random() * source.length)] || items.find((i) => i?.name !== "Nenhuma das opções") || items[0];
+  });
 
   const [visible, setVisible] = useState(false);
   const [currentPlace, setCurrentPlace] = useState(6); // começa no ID 6
@@ -41,7 +46,7 @@ export default function Banheiro({ room, onFinished }) {
       const index = place.id - 6;
       const chosen = itensSelecionados[index];
       const defaultItem = place.items[0];
-      if ((chosen?.score ?? defaultItem.score) <= 3 && chosen?.id !== defaultItem.id) {
+      if ((chosen?.score ?? defaultItem.score) < 3 && chosen?.id !== defaultItem.id) {
         mistakes.push({ room: room.name || "Banheiro", placeId: place.id, itemName: chosen?.name || defaultItem.name });
       }
     });

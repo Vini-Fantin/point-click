@@ -7,7 +7,12 @@ import ListaObjetos from "../ui/ListaObjetos";
 
 export default function SalaDeEstar({ room, onFinished }) {
 
-  const itensPadrao = room.places.map((place) => place.items[0]);
+  const itensPadrao = room.places.map((place) => {
+    const items = place.items || [];
+    const pool = items.filter((i) => i?.name !== "Nenhuma das opções");
+    const source = pool.length > 0 ? pool : items;
+    return source[Math.floor(Math.random() * source.length)] || items.find((i) => i?.name !== "Nenhuma das opções") || items[0];
+  });
 
   const [visible, setVisible] = useState(false);
   const [currentPlace, setCurrentPlace] = useState(1); // começa no ID 1

@@ -9,7 +9,12 @@ export default function Quarto({ room, onFinished }) {
   const places = room.places.filter(
     (place) => place.id >= 11 && place.id <= 15
   );
-  const itensPadrao = places.map((place) => place.items[0]);
+  const itensPadrao = places.map((place) => {
+    const items = place.items || [];
+    const pool = items.filter((i) => i?.name !== "Nenhuma das opções");
+    const source = pool.length > 0 ? pool : items;
+    return source[Math.floor(Math.random() * source.length)] || items.find((i) => i?.name !== "Nenhuma das opções") || items[0];
+  });
 
   const [visible, setVisible] = useState(false);
   const [currentPlace, setCurrentPlace] = useState(11); // começa no ID 11
